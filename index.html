@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+</head>
+<body>
+    <div id="texto"></div>
+    <script>
+        var peticion = new XMLHttpRequest();
+        peticion.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                carga(this);
+            }
+        }
+        peticion.open("GET", "valdepenas.xml", true);
+        peticion.send();
+        function carga(xml){
+            var docxml = xml.responseXML;
+            var nombre = docxml.getElementsByTagName("nombre");
+            var provincia = docxml.getElementsByTagName("provincia");
+            var prediccion = docxml.getElementsByTagName("prediccion");
+            let dias = [];
+            let fechas = [];
+            let cielo = [];
+            let precipitacion = [];
+            dias[0] = prediccion[0].childNodes[0];
+            /*for (let i =0; i<prediccion.length; i++){
+                dias[i] = prediccion[0].childNodes[i];
+            }
+            for (let i=0; i<dias.length; i++){
+                fechas[i] = dias[i].getAttributeNode("fecha").nodeValue;
+                cielo = dias[i].chi
+            }*/
+            escribe (nombre, provincia, dias, fechas);
+        }
+        function escribe (nombre, provincia, dias, fechas){
+            nombre=nombre[0].childNodes[0].nodeValue;
+            provincia=provincia[0].childNodes[0].nodeValue;
+            document.getElementById("texto").innerHTML+="Localidad: " + nombre + "<br>";
+            document.getElementById("texto").innerHTML+="Provincia: " + provincia + "<br>";
+            for (i=0; dias.length; i++){
+            document.getElementById("texto").innerHTML+="Fecha " + i+1 + ": " + fechas[0] + "<br>";
+            }
+        }
+    </script>
+</body>
+</html>
